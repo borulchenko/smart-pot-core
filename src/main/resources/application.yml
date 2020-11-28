@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://0.0.0.0:3306/smart-pot
-    username: user
-    password: password
+    url: ${MYSQL_URL:jdbc:mysql://0.0.0.0:3306/smart-pot}
+    username: ${MYSQL_USER:user}
+    password: ${MYSQL_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -15,26 +15,24 @@ spring:
     host: localhost
     port: 6379
 
-
 invalidate:
   cache:
-    delay: 60000
-#    delay: 86400000
+    delay: ${INVALIDATE_CACHE_DELAY:60000}
 
 mqtt:
-  host: broker.shiftr.io
-  port: 1883
-  username: 79b5b7ac
-  password: 7614b0c8da666f35
-  automaticReconnect: true
-  cleanSession: true
-  connectionTimeout: 10
+  host: ${MQTT_HOST:broker.shiftr.io}
+  port: ${MQTT_PORT:1883}
+  username: ${MQTT_USER:79b5b7ac}
+  password: ${MQTT_PASSWORD:7614b0c8da666f35}
+  automaticReconnect: ${MQTT_AUTO_RECONNECT:true}
+  cleanSession: ${MQTT_CLEAN_SESSION:true}
+  connectionTimeout: ${MQTT_CONN_TIMEOUT:10}
 
 device:
   status:
     collect:
-      delay: 60000
+      delay: ${DEVICE_STATUS_COLLECT_DELAY:60000}
     clear:
       cache:
-        delay: 600000
+        delay: ${DEVICE_STATUS_CLEAR_CACHE_DELAY:600000}
 
