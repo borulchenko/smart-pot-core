@@ -15,10 +15,7 @@ invalidate:
     delay: ${INVALIDATE_CACHE_DELAY:60000}
 
 mqtt:
-  host: ${MQTT_HOST:broker.shiftr.io}
-  port: ${MQTT_PORT:1883}
-  username: ${MQTT_USER:79b5b7ac}
-  password: ${MQTT_PASSWORD:7614b0c8da666f35}
+  url: tcp://${MQTT_HOST:0.0.0.0}:${MQTT_PORT:1883}
   automaticReconnect: ${MQTT_AUTO_RECONNECT:true}
   cleanSession: ${MQTT_CLEAN_SESSION:true}
   connectionTimeout: ${MQTT_CONN_TIMEOUT:10}
