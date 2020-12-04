@@ -3,6 +3,7 @@ package com.rborulchenko.spcore.web;
 import java.util.List;
 
 import com.sun.istack.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,21 +42,21 @@ public class PotController {
     }
 
     @GetMapping("/status/collect")
-    public ResponseEntity<String> collectStatus() {
+    public ResponseEntity<ResponseMessage> collectStatus() {
         log.info("Inside collect status from device endpoint.");
         potStatusService.collectStatus();
-        return ResponseEntity.ok(String.format("%s topic was published", Topic.COLLECT_STATUS.name()));
+        return buildSimpleResponse(String.format("%s topic was published", Topic.COLLECT_STATUS.name()));
     }
 
     @GetMapping("/enableWatering")
-    public ResponseEntity<String> enableWatering() {
+    public ResponseEntity<ResponseMessage> enableWatering() {
         log.info("Inside enable watering in device endpoint.");
         potStatusService.enableWatering();
-        return ResponseEntity.ok(String.format("%s topic was published", Topic.ENABLE_WATERING.name()));
+        return buildSimpleResponse(String.format("%s topic was published", Topic.ENABLE_WATERING.name()));
     }
 
     @GetMapping("/config")
-    public ResponseEntity<String> enableLighting(
+    public ResponseEntity<ResponseMessage> enableLighting(
             @RequestParam("illuminationEnabled") boolean enableLighting
     ) {
         log.info("Inside enable lighting in device endpoint.");
@@ -65,14 +66,18 @@ public class PotController {
         potStatusService.save(latest);
 
         potStatusService.enableLighting(enableLighting);
-        return ResponseEntity.ok(String.format("%s topic was published", Topic.ENABLE_LIGHTING.name()));
+        return buildSimpleResponse(String.format("%s topic was published", Topic.ENABLE_LIGHTING.name()));
     }
 
     @PostMapping("/status")
-    public ResponseEntity<String> savePotStatus(
+    public ResponseEntity<ResponseMessage> savePotStatus(
             @RequestBody @NotNull PotStatus potStatus) {
         log.info("Inside save pot status endpoint.");
         potStatusService.save(potStatus);
-        return ResponseEntity.ok("Pot status was saved successfully");
+        return buildSimpleResponse("Pot status was saved successfully");
+    }
+
+    private ResponseEntity<ResponseMessage> buildSimpleResponse(String responseMessage) {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(responseMessage));
     }
 }
