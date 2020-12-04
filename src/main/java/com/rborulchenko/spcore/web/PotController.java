@@ -2,9 +2,12 @@ package com.rborulchenko.spcore.web;
 
 import java.util.List;
 
+import com.sun.istack.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/pot")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.99.100:34200")
 @AllArgsConstructor
 @Slf4j
 public class PotController {
@@ -58,9 +61,18 @@ public class PotController {
         log.info("Inside enable lighting in device endpoint.");
         PotStatus latest = potStatusService.getLatest();
         latest.setIllumination(enableLighting);
+        log.info("Saving pot status {}", latest);
         potStatusService.save(latest);
 
         potStatusService.enableLighting(enableLighting);
         return ResponseEntity.ok(String.format("%s topic was published", Topic.ENABLE_LIGHTING.name()));
+    }
+
+    @PostMapping("/status")
+    public ResponseEntity<String> savePotStatus(
+            @RequestBody @NotNull PotStatus potStatus) {
+        log.info("Inside save pot status endpoint.");
+        potStatusService.save(potStatus);
+        return ResponseEntity.ok("Pot status was saved successfully");
     }
 }
