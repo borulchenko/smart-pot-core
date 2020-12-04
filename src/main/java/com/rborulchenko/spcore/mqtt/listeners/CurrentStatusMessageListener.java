@@ -17,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 public class CurrentStatusMessageListener implements IMqttMessageListener {
-    private PotStatusRepository potStatusRepository;
-    private ObjectMapper objectMapper;
+    private final PotStatusRepository potStatusRepository;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {

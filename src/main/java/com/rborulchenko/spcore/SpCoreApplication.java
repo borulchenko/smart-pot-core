@@ -10,7 +10,6 @@ import com.rborulchenko.spcore.service.PotStatusService;
 
 @SpringBootApplication
 @EnableScheduling
-//@EnableCaching
 public class SpCoreApplication {
 
 	public static void main(String[] args) {

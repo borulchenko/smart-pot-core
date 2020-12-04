@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 public class MqttSubscriber {
-    private MqttService mqttService;
-    private CurrentStatusMessageListener currentStatusMessageListener;
+    private final MqttService mqttService;
+    private final CurrentStatusMessageListener currentStatusMessageListener;
 
     @PostConstruct
     public void init() {

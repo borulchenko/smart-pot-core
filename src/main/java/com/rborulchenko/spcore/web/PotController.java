@@ -21,11 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/pot")
-@CrossOrigin(origins = "http://192.168.99.100:34200")
+@CrossOrigin()
 @AllArgsConstructor
 @Slf4j
 public class PotController {
-    private PotStatusService potStatusService;
+    private final PotStatusService potStatusService;
 
     @GetMapping("/statuses")
     public ResponseEntity<List<PotStatus>> getAllStatuses() {

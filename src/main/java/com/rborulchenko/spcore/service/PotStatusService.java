@@ -21,8 +21,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Slf4j
 public class PotStatusService {
-    private PotStatusRepository potStatusRepository;
-    private MqttService mqttService;
+    private final PotStatusRepository potStatusRepository;
+    private final MqttService mqttService;
 
     @CachePut(value = "statuses", key = "#potStatus.collectingHour")
     public void save(PotStatus potStatus) {
@@ -38,10 +38,10 @@ public class PotStatusService {
         log.info("Getting the latest status");
         Sort sortOrder = Sort.by("collectingTime").descending();
         Page<PotStatus> lastStatus = potStatusRepository.findAll(PageRequest.of(0, 1, sortOrder));
-        log.info("Retrieved latest status {}");
+        log.info("Retrieved latest status");
         return lastStatus.hasContent()
             ? lastStatus.getContent().get(0)
-            : null;
+            : new PotStatus();
     }
     @Scheduled(fixedDelayString = "${device.status.collect.delay}")
     public void collectStatus() {

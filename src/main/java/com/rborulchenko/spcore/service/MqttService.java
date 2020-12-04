@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Slf4j
 public class MqttService {
-    private IMqttClient mqttClient;
+    private final IMqttClient mqttClient;
 
     public void publish(Topic topic, String payload) {
         MqttMessage mqttMessage = new MqttMessage();
