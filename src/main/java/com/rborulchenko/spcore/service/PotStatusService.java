@@ -2,6 +2,7 @@ package com.rborulchenko.spcore.service;
 
 import java.util.List;
 
+import com.rborulchenko.spcore.util.PotStatusUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -31,7 +32,13 @@ public class PotStatusService {
     }
 
     public List<PotStatus> getAll() {
-        return potStatusRepository.findAll();
+        List<PotStatus> existingStatuses = potStatusRepository.findAll();
+        if (existingStatuses.isEmpty()) {
+            List<PotStatus> initializedStatuses = PotStatusUtils.buildStatuses();
+            potStatusRepository.saveAll(initializedStatuses);
+            return initializedStatuses;
+        }
+        return existingStatuses;
     }
 
     public PotStatus getLatest() {
