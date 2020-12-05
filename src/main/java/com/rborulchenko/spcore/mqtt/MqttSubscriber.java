@@ -21,8 +21,7 @@ public class MqttSubscriber {
 
     @PostConstruct
     public void init() {
-        log.info("Inside store status listener in device endpoint.");
         mqttService.subscribe(STORE_STATUS, currentStatusMessageListener);
-        System.out.println("subscribed to the topic");
+        log.info("Subscribed to the {} topic.", STORE_STATUS);
     }
 }
