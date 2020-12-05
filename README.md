@@ -1,9 +1,25 @@
-# Smart pot core project
-Standard spring boot application which integrates with cloud mqtt broker, pubs and subs on custom topics.
+# SmartPotCore
 
-## DB: 
-`H2 - Server Mode` is used 
+Smart Pot Core API for SP-Client app.
 
-## MQTT: 
-Awesome free cloud broker https://shiftr.io/ 
-Read the documentation to create your own broker and integrate with java/arduino/whateverelse app you want.
+Integrates with Arduino-Smart-Pot using mqtt broker, pubs and subs custom topics.
+
+## Dependencies 
+
+* MySQL database
+* MQTT broker
+
+## Deployment variables
+
+* MYSQL_URL
+* MYSQL_USER
+* MYSQL_PASSWORD
+* MQTT_HOST
+* MQTT_PORT
+
+ [refer application.yaml](src/main/resources/application.yml)
+
+## Built With
+
+* [Spring Boot](https://start.spring.io/)
+* [Maven](https://maven.apache.org/) - Dependency Management
