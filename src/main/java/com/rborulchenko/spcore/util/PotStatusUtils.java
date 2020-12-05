@@ -2,7 +2,6 @@ package com.rborulchenko.spcore.util;
 
 import com.rborulchenko.spcore.model.PotStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,8 @@ import java.util.List;
 public class PotStatusUtils {
     public static List<PotStatus> buildStatuses() {
         List<PotStatus> statuses = new ArrayList<>();
-        LocalDateTime now = LocalDate.now().atTime(10, 0).minusDays(1);
+
+        LocalDateTime now = LocalDateTime.now().minusHours(4);
         statuses.add(buildPotStatus(26, 56, 56, false, now));
         statuses.add(buildPotStatus(24, 46, 75, true, now.minusHours(2)));
         statuses.add(buildPotStatus(23, 52, 69, true, now.minusHours(4)));

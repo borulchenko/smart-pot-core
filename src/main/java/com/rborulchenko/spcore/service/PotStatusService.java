@@ -32,13 +32,15 @@ public class PotStatusService {
     }
 
     public List<PotStatus> getAll() {
-        List<PotStatus> existingStatuses = potStatusRepository.findAll();
-        if (existingStatuses.isEmpty()) {
+        Sort sortOrder = Sort.by("collectingTime").ascending();
+        Page<PotStatus> lastStatus = potStatusRepository.findAll(PageRequest.of(0, 10, sortOrder));
+
+        if (!lastStatus.hasContent()) {
             List<PotStatus> initializedStatuses = PotStatusUtils.buildStatuses();
             potStatusRepository.saveAll(initializedStatuses);
             return initializedStatuses;
         }
-        return existingStatuses;
+        return lastStatus.getContent();
     }
 
     public PotStatus getLatest() {
